@@ -295,8 +295,12 @@
         <fqname>@1.0::IDisplayFeature/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>vendor.dolby.hardware.dms</name>
+        <name>vendor.qti.hardware.qccsyshal</name>
         <transport>hwbinder</transport>
-        <fqname>@2.0::IDms/default</fqname>
+        <version>1.0</version>
+        <interface>
+            <name>IQccsyshal</name>
+            <instance>qccsyshal</instance>
+        </interface>
     </hal>
 </manifest>
