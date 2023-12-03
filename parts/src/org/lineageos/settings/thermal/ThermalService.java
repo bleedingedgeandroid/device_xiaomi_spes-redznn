@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.refreshrate;
+package org.lineageos.settings.thermal;
 
 import android.app.ActivityManager;
 import android.app.ActivityTaskManager;
@@ -22,24 +22,45 @@ import android.app.ActivityTaskManager.RootTaskInfo;
 import android.app.IActivityTaskManager;
 import android.app.Service;
 import android.app.TaskStackListener;
-import android.content.BroadcastReceiver;
+import android.app.TaskStackListener;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.os.RemoteException;
+import android.provider.Settings;
+import android.util.Log;
 
-public class RefreshService extends Service {
+import java.util.Arrays;
 
-    private static final String TAG = "RefreshService";
-    private static final boolean DEBUG = true;
+public class ThermalService extends Service {
+
+    private static final String TAG = "ThermalService";
+    private static final boolean DEBUG = false;
+    private static final String SETTINGS_GAME_LIST = "gamespace_game_list";
 
     private String mPreviousApp;
-    private RefreshUtils mRefreshUtils;
+    private ThermalUtils mThermalUtils;
+
     private IActivityTaskManager mActivityTaskManager;
+
+    private boolean isListedOnGameSpace(String packageName) {
+        String[] gameList = Settings.System.getString(getContentResolver(),
+                SETTINGS_GAME_LIST).split(";");
+        if (packageName == null || gameList.length == 0) {
+            return false;
+        }
+
+        return Arrays.stream(gameList).map(data -> {
+            String[] userGame = data.split("=");
+            return userGame.length == 2 ? userGame[0] : data;
+        }).anyMatch(it -> it.equals(packageName));
+    }
+
+    private boolean isConfigured(String packageName) {
+        return mThermalUtils.getStateForPackage(packageName) != ThermalUtils.STATE_DEFAULT;
+    }
+
     private final TaskStackListener mTaskListener = new TaskStackListener() {
         @Override
         public void onTaskStackChanged() {
@@ -48,49 +69,32 @@ public class RefreshService extends Service {
                 if (info == null || info.topActivity == null) {
                     return;
                 }
+
                 String foregroundApp = info.topActivity.getPackageName();
                 if (!foregroundApp.equals(mPreviousApp)) {
-                    mRefreshUtils.setRefreshRate(foregroundApp);
+                    if (!isConfigured(foregroundApp) && isListedOnGameSpace(foregroundApp)) {
+                        mThermalUtils.setThermalProfileForce(ThermalUtils.STATE_GAMING);
+                    } else {
+                    mThermalUtils.setThermalProfile(foregroundApp);
+                    }
                     mPreviousApp = foregroundApp;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
             }
-        };
-
-    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mPreviousApp = "";
-            mRefreshUtils.setDefaultRefreshRate(context);
         }
     };
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
-        mRefreshUtils = new RefreshUtils(this);
-        mRefreshUtils.setDefaultRefreshRate(this);
+        mThermalUtils = new ThermalUtils(this);
         try {
             mActivityTaskManager = ActivityTaskManager.getService();
             mActivityTaskManager.registerTaskStackListener(mTaskListener);
         } catch (RemoteException e) {
             // Do nothing
         }
-        registerReceiver();
         super.onCreate();
-    }
-
-    @Override
-    public void onDestroy() {
-        if (DEBUG) Log.d(TAG, "Destroying service");
-        unregisterReceiver();
-        try {
-            ActivityTaskManager.getService().unregisterTaskStackListener(mTaskListener);
-        } catch (RemoteException e) {
-            // Do nothing
-        }
-        mRefreshUtils.setDefaultRefreshRate(this);
-        super.onDestroy();
     }
 
     @Override
@@ -102,15 +106,5 @@ public class RefreshService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    private void registerReceiver() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        this.registerReceiver(mIntentReceiver, filter);
-    }
-
-    private void unregisterReceiver() {
-        this.unregisterReceiver(mIntentReceiver);
     }
 }
