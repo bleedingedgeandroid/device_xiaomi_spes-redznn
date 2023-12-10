@@ -6,6 +6,8 @@
 
 DEVICE_PATH := device/xiaomi/spes
 
+IGNORE_SELINUX_NEVERALLOWS := true
+
 # A/B
 AB_OTA_UPDATER := true
 
