@@ -12,7 +12,7 @@ rm -rf hardware/google/pixel/kernel_headers/Android.bp
 # Remove hardware/lineage/compat to avoid conflicts
 rm -rf hardware/lineage/compat/Android.bp
 
-git clone https://github.com/redznn/vendor_xiaomi_spes vendor/xiaomi/spes -b 14.0
+git clone https://github.com/redznn/android_vendor_xiaomi_spes vendor/xiaomi/spes -b 14.0
 cd vendor/xiaomi/spes
 git pull
 cd ../../..
