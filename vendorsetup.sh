@@ -22,7 +22,7 @@ git pull
 cd ../../..
 
 # hardware sources
-git clone https://github.com/PixelExperience-Staging/hardware_xiaomi hardware/xiaomi -b fourteen
+git clone https://github.com/PixelOS-AOSP/hardware_xiaomi hardware/xiaomi -b fourteen
 cd hardware/xiaomi
 git pull
 cd ../..
