@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 IGNORE_SELINUX_NEVERALLOWS := true
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
