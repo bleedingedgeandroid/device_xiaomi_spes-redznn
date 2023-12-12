@@ -23,7 +23,7 @@ $(call inherit-product-if-exists, vendor/prebuilt-apps/config.mk)
 # Camera
 $(call inherit-product-if-exists, vendor/miuicamera/config.mk)
 
-TARGET_BOOT_ANIMATION_RES := 1080p
+TARGET_BOOT_ANIMATION_RES := 1080
 
 # Product Specifics
 PRODUCT_NAME := aosp_spes
