@@ -6,6 +6,9 @@
 
 DEVICE_PATH := device/xiaomi/spes
 
+# Disable SELinux Neverallows
+SELINUX_IGNORE_NEVERALLOWS := true
+
 # A/B
 AB_OTA_UPDATER := true
 
@@ -135,6 +138,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 
 BOARD_KERNEL_CMDLINE += \
+    androidboot.selinux=permissive \
     androidboot.console=ttyMSM0 \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
