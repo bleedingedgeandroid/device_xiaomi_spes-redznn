@@ -290,4 +290,5 @@
             <name>IQccsyshal</name>
             <instance>qccsyshal</instance>
         </interface>
+    </hal>
 </manifest>
