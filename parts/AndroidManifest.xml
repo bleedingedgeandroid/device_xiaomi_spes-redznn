@@ -61,16 +61,6 @@
             android:value="true" />
         </service>
 
-<<<<<<< HEAD
-        <activity
-            android:name=".refreshrate.RefreshActivity"
-            android:label="@string/refresh_title"
-            android:exported="false"
-            android:theme="@style/Theme.SubSettingsBase">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-=======
         <service
             android:name=".thermal.ThermalService"
             android:permission="ThermalService"
@@ -86,19 +76,11 @@
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
             </intent-filter>
 
->>>>>>> d750c72 (spes: parts: import parts from EvolutionX)
             <meta-data
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.ia.display" />
             <meta-data
                 android:name="com.android.settings.summary"
-<<<<<<< HEAD
-                android:resource="@string/refresh_summary" />
-        </activity>
-
-        <service
-            android:name=".refreshrate.RefreshService"
-=======
                 android:resource="@string/dc_dimming_enable_summary" />
         </activity>
 
@@ -106,7 +88,6 @@
             android:name=".display.DcDimmingTileService"
             android:icon="@drawable/ic_dc_tile"
             android:label="@string/dc_dimming_enable_title"
->>>>>>> d750c72 (spes: parts: import parts from EvolutionX)
             android:exported="true"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -115,19 +96,5 @@
             </intent-filter>
         </service>
 
-<<<<<<< HEAD
-         <activity
-            android:name=".speaker.ClearSpeakerActivity"
-            android:label="@string/clear_speaker_title"
-            android:theme="@style/Theme.SubSettingsBase">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.category"
-                       android:value="com.android.settings.category.ia.sound" />
-        </activity>
-
-=======
->>>>>>> d750c72 (spes: parts: import parts from EvolutionX)
     </application>
 </manifest>
