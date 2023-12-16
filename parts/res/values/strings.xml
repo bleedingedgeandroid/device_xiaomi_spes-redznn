@@ -17,16 +17,6 @@
     <string name="music_headset_scenario_video">Video</string>
     <string name="music_headset_scenario_vocal">Voice</string>
 
-<<<<<<< HEAD
-=======
-    <!-- DC dimming settings -->
-    <string name="dc_dimming_enable_title">DC Dimming</string>
-    <string name="dc_dimming_enable_summary">Reduces eye strain in low light conditions</string>
-    <string name="dc_dimming_enable_summary_not_supported">DC Dimming is currently not supported by the kernel</string>
-
-<<<<<<< HEAD
->>>>>>> d750c72 (spes: parts: import parts from EvolutionX)
-=======
     <!-- Dirac settings -->
     <string name="dirac_title">Dirac sound enhancer</string>
     <string name="dirac_summary">Optimize audio quality</string>
@@ -77,5 +67,4 @@
     <string name="dirac_enable">Enable Dirac</string>
     <string name="dirac_hifi_title">Dirac Hi-Fi</string>
     <string name="dirac_hifi_summary">Decrease noise and distortion while increasing sound quality.</string>
->>>>>>> 019f657 (Add DIRAC Strings)
 </resources>
